@@ -82,7 +82,7 @@
                 enabled: false // Disable accessibility module
             },
             title: {
-                text: 'Pie'
+                text: 'PacketLoss Per Minggu'
             },
             plotOptions: {
                 pie: {
@@ -106,53 +106,6 @@
                 type: 'pie'
             }]
         });
-
-
-        Highcharts.chart('columnChart', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Column'
-            },
-            xAxis: {
-                categories: ['CLEAR', 'SPIKE', 'CONSECUTIVE']
-            },
-            yAxis: {
-                title: {
-                    text: 'Y Axis Label'
-                },
-                min: 0
-            },
-            plotOptions: {
-                column: {
-                    borderWidth: 0,
-                    grouping: false,
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            series: [{
-                name: 'Data',
-                data: [{
-                    name: 'CLEAR',
-                    y: clearData,
-                    color: 'rgb(0, 204, 102)' // Green color for CLEAR
-                }, {
-                    name: 'SPIKE',
-                    y: spikeData,
-                    color: 'rgb(255, 255, 51)' // Yellow color for SPIKE
-                }, {
-                    name: 'CONSECUTIVE',
-                    y: consecutiveData,
-                    color: 'red' // Red color for CONSECUTIVE
-                }]
-            }],
-            credits: {
-                enabled: false
-            }
-        });
     }
 
     function createColumnChart(data) {
@@ -160,12 +113,12 @@
             item.spike_count = parseInt(item.spike_count);
             item.clear_count = parseInt(item.clear_count);
         });
-        Highcharts.chart('columnNopChart', {
+        Highcharts.chart('columnChart', {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Column Chart'
+                text: 'Data Consecutive NOP'
             },
             xAxis: {
                 categories: data.map(item => item.nop),
