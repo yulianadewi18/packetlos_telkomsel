@@ -112,6 +112,7 @@
         data.forEach(item => {
             item.spike_count = parseInt(item.spike_count);
             item.clear_count = parseInt(item.clear_count);
+            item.consecutive_count = parseInt(item.consecutive_count);
         });
         Highcharts.chart('columnChart', {
             chart: {
@@ -137,14 +138,20 @@
                 }
             },
             series: [{
-                name: 'SPIKE',
-                data: data.map(item => item.spike_count),
-                color: 'rgb(255, 255, 51)' // Yellow for SPIKE
-            }, {
-                name: 'CLEAR',
-                data: data.map(item => item.clear_count),
-                color: 'rgb(0, 204, 102)' // Green for CLEAR
-            }],
+                    name: 'SPIKE',
+                    data: data.map(item => item.spike_count),
+                    color: 'rgb(255, 255, 51)' // Yellow for SPIKE
+                }, {
+                    name: 'CLEAR',
+                    data: data.map(item => item.clear_count),
+                    color: 'rgb(0, 204, 102)' // Green for CLEAR
+                },
+                {
+                    name: 'CONSECUTIVE',
+                    data: data.map(item => item.consecutive_count),
+                    color: 'red' // Green for CLEAR
+                },
+            ],
             credits: {
                 enabled: false
             }

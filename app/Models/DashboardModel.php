@@ -34,7 +34,7 @@ class DashboardModel extends Model
     public function getChartData($selectedWeek)
     {
         // SQL query to count "SPIKE" and "CLEAR" statuses grouped by "nop"
-        $query = $this->select('nop, SUM(CASE WHEN pl_status = "SPIKE" THEN 1 ELSE 0 END) AS spike_count, SUM(CASE WHEN pl_status = "CLEAR" THEN 1 ELSE 0 END) AS clear_count')
+        $query = $this->select('nop, SUM(CASE WHEN pl_status = "SPIKE" THEN 1 ELSE 0 END) AS spike_count, SUM(CASE WHEN pl_status = "CLEAR" THEN 1 ELSE 0 END) AS clear_count, , SUM(CASE WHEN pl_status = "CONSECUTIVE" THEN 1 ELSE 0 END) AS consecutive_count')
             ->where('week', $selectedWeek) // Replace 'week' with your actual column name
             ->groupBy('nop')
             ->orderBy('nop', 'asc')

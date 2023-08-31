@@ -71,47 +71,13 @@
                     </div>
                 </div>
             </div>
-            <!-- Elemen Canvas untuk Donat Chart (sebelah tengah) -->
 
-            <!-- <div class="col-sm-4">
-                <div class="card" style="border-width: 0px;">
-                    <div class="card">
-                        <div class="card-body">
-                            <canvas id="donatChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- Elemen Canvas untuk Bar Chart (sebelah kanan) -->
-            <!-- <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="BarChart" style="height: auto;">
-                            <canvas id="barChart"></canvas>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div> -->
         </div>
 
 </div>
 </div>
 </main>
-<footer class="py-4 bg-light mt-auto">
-    <div class="container-fluid px-4">
-        <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-            <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
-            </div>
-        </div>
-    </div>
-</footer>
+
 </div>
 </div>
 
