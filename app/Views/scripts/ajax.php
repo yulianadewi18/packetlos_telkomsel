@@ -137,21 +137,22 @@
                     borderWidth: 0
                 }
             },
+            tooltip: {
+                shared: true
+            },
             series: [{
-                    name: 'SPIKE',
-                    data: data.map(item => item.spike_count),
-                    color: 'rgb(255, 255, 51)' // Yellow for SPIKE
-                }, {
-                    name: 'CLEAR',
-                    data: data.map(item => item.clear_count),
-                    color: 'rgb(0, 204, 102)' // Green for CLEAR
-                },
-                {
-                    name: 'CONSECUTIVE',
-                    data: data.map(item => item.consecutive_count),
-                    color: 'red' // Green for CLEAR
-                },
-            ],
+                name: 'SPIKE',
+                data: data.map(item => item.spike_count),
+                color: 'yellow' // Yellow for SPIKE
+            }, {
+                name: 'CLEAR',
+                data: data.map(item => item.clear_count),
+                color: 'green' // Green for CLEAR
+            }, {
+                name: 'CONSECUTIVE',
+                data: data.map(item => item.consecutive_count),
+                color: 'red' // Green for CLEAR
+            }],
             credits: {
                 enabled: false
             }
