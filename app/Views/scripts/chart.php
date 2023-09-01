@@ -32,7 +32,7 @@
         var marker = L.marker([packet[i].latitude, packet[i].longitude], {
                 icon: markerIcon
             }).addTo(map)
-            .bindPopup('<b>' + packet[i].site_id + '</b>')
+            .bindPopup('<b>' + packet[i].site_id + '<br/>' + packet[i].avg_packet_loss + '</b>')
             .openPopup();
 
     }
