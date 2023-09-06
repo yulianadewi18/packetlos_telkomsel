@@ -15,6 +15,9 @@ class AdminModel extends Model
         $builder->like('site_id', $keyword);
         $builder->orLike('nop', $keyword);
         $builder->orLike('pl_status', $keyword);
+        $builder->orLike('week', $keyword);
+        $builder->orLike('avg_packet_loss', $keyword);
+        $builder->orLike('kabupaten', $keyword);
         return $builder;
     }
 }
