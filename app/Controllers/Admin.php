@@ -12,18 +12,7 @@ class Admin extends BaseController
             1;
 
         $Adminmodel = new AdminModel();
-
-        $keyword = $this->request->getVar('keyword');
-        if ($keyword) {
-            $admin = $Adminmodel->search($keyword);
-        } else {
-            $admin = $Adminmodel;
-        }
-
-        //$data['packetloss'] = $Adminmodel->findAll();
-        $data['packetloss'] = $admin->paginate(25, 'packetlos');
-        $data['pager'] = $Adminmodel->pager;
-        $data['currentPage'] = $currentPage;
+        $data['packetloss'] = $Adminmodel->findAll();
         dd($data['packetloss']);
         return view('admin', $data);
     }
