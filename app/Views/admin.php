@@ -33,6 +33,7 @@
                             <th scope="col">Remark</th>
                             <th scope="col">Aksi</th>
                         </tr>
+
                     </thead>
                     <tbody>
                         <?php $i = 1 + (25 * ($currentPage - 1)) ?>
@@ -52,8 +53,7 @@
                                     <form method="post">
                                         <button type="submit" class="btn btn-warning">Edit</button>
                                     </form>
-                                </td>
-
+                                </td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
