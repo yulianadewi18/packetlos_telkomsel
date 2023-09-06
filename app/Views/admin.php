@@ -3,7 +3,22 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4 ">
-            <h1 class="mt-4 mb-4">Admin</h1>
+
+            <div class="row">
+                <div class="col">
+                    <h1 class="mt-4 mb-4">Admin</h1>
+                </div>
+                <div class="col-4">
+                    <form class="mt-4 mb-4" method="post">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Cari" name="keyword" aria-label="Cari" aria-describedby="btnNavbarSearch" />
+                            <button class="btn btn-primary" id="btnNavbarSearch" name="submit" type="submit"><i class="fas fa-search"> </i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
             <div class="table">
                 <table class="table border ">
                     <thead class="table-light ">
@@ -19,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 1 ?>
+                        <?php $i = 1 + (25 * ($currentPage - 1)) ?>
                         <?php foreach ($packetloss as $p) : ?>
 
                             <tr>
@@ -36,6 +51,7 @@
                         <?php endforeach ?>
                     </tbody>
                 </table>
+                <?= $pager->links('packetlos', 'admin_pagination'); ?>
             </div>
         </div>
     </main>
