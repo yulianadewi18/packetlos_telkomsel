@@ -9,8 +9,8 @@ class Admin extends BaseController
     public function index()
     {
         $Adminmodel = new AdminModel();
-        $data['packetloss'] = $Adminmodel->findAll();
-        dd($data['packetloss']);
+        $data['packetloss'] = $Adminmodel->orderBy('week', 'desc')->findAll();
+        // dd($data['packetloss']);
         return view('admin', $data);
     }
 }

@@ -16,6 +16,7 @@
                             <th scope="col">AVG Packet Loss</th>
                             <th scope="col">PL Status</th>
                             <th scope="col">Remark</th>
+                            <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +33,12 @@
                                 <td><?= $p['avg_packet_loss']; ?></td>
                                 <td><?= $p['pl_status']; ?></td>
                                 <td><?= $p['remark']; ?></td>
+                                <td>
+                                    <form method="post">
+                                        <button type="submit" class="btn btn-warning">Edit</button>
+                                    </form>
+                                </td>
+
                             </tr>
                         <?php endforeach ?>
                     </tbody>
