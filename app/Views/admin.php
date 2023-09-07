@@ -16,6 +16,21 @@
                         </div>
                     </form>
                 </div>
+                <!-- Filter by Status -->
+                <div class="col-4">
+                    <form class="mt-4 mb-4" method="post">
+                        <div class="input-group">
+                            <select class="form-select" name="filter_status">
+                                <option value="">Filter by Status</option>
+                                <option value="SPIKE">SPIKE</option>
+                                <option value="CLEAR">CLEAR</option>
+                                <option value="CONSECUTIVE">CONSECUTIVE</option>
+                                <!-- Add more status options as needed -->
+                            </select>
+                            <button class="btn btn-primary" type="submit"><i class="fas fa-filter"></i> Filter</button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
 
@@ -38,23 +53,26 @@
                     <tbody>
                         <?php $i = 1 + (25 * ($currentPage - 1)) ?>
                         <?php foreach ($packetloss as $p) : ?>
+                            <?php if (empty($_POST['filter_status']) || $_POST['filter_status'] == $p['pl_status']) : ?>
 
-                            <tr>
-                                <th scope="row"><?= $i++; ?></th>
-                                <td><?= $p['week']; ?></td>
-                                </td>
-                                <td><?= $p['site_id']; ?></td>
-                                <td><?= $p['nop']; ?></td>
-                                <td><?= $p['kabupaten']; ?></td>
-                                <td><?= $p['avg_packet_loss']; ?></td>
-                                <td><?= $p['pl_status']; ?></td>
-                                <td><?= $p['remark']; ?></td>
-                                <td>
-                                    <form method="post">
-                                        <button type="submit" class="btn btn-warning">Edit</button>
-                                    </form>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <th scope="row"><?= $i++; ?></th>
+                                    <td><?= $p['week']; ?></td>
+                                    </td>
+                                    <td><?= $p['site_id']; ?></td>
+                                    <td><?= $p['nop']; ?></td>
+                                    <td><?= $p['kabupaten']; ?></td>
+                                    <td><?= $p['avg_packet_loss']; ?></td>
+                                    <td><?= $p['pl_status']; ?></td>
+                                    <td><?= $p['remark']; ?></td>
+                                    <td>
+                                        <form method="post">
+                                            <button type="submit" class="btn btn-warning">Edit</button>
+                                        </form>
+                                                   
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                         <?php endforeach ?>
                     </tbody>
                 </table>
