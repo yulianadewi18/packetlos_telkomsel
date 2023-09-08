@@ -31,11 +31,12 @@ class Admin extends BaseController
     {
         $site_id = $this->request->getPost("site_id");
         $pl_status = $this->request->getPost("pl_status");
-
+        $newAvgPacketLoss = $this->request->getPost("avg_packet_loss"); // Updated field name
 
         $data = [
             'site_id' => $site_id,
             'pl_status' => $pl_status,
+            'avg_packet_loss' => $newAvgPacketLoss, // Updated field name
         ];
 
         $where = ['site_id' => $site_id];

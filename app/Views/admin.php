@@ -38,7 +38,7 @@
                 <table class="table border ">
                     <thead class="table-light ">
                         <tr>
-                            <th scope="col"> </th>
+                            <th scope="col">No</th>
                             <th scope="col">Week</th>
                             <th scope="col">Site ID</th>
                             <th scope="col">NOP</th>
@@ -102,6 +102,51 @@
                                 <option value="CONSECUTIVE" <?= ($p['pl_status'] == 'CONSECUTIVE') ? 'selected' : ''; ?>>CONSECUTIVE</option>
                                 <!-- Add more options as needed -->
                             </select>
+                            <div class="form-group">
+                                <label for="editAvgPacketLoss">Average Packet Loss</label>
+                                <input type="text" class="form-control" id="editAvgPacketLoss" name="avg_packet_loss" value="<?= $p['avg_packet_loss']; ?>" oninput="validateAvgPacketLoss(this)" required>
+                                <span id="avgPacketLossError" style="color: red;"></span>
+                                <script>
+                                    function validateAvgPacketLoss(input) {
+                                        var avgPacketLoss = input.value;
+                                        var filteredAvgPacketLoss = avgPacketLoss.replace(/[^0-9.]/g, ''); // Menghapus karakter selain angka dan titik
+                                        var dotsCount = (filteredAvgPacketLoss.match(/\./g) || []).length;
+
+                                        // Menghapus titik tambahan jika ada lebih dari satu
+                                        if (dotsCount > 1) {
+                                            filteredAvgPacketLoss = filteredAvgPacketLoss.replace(/\./g, (match, offset) => {
+                                                return offset === filteredAvgPacketLoss.lastIndexOf('.') ? '.' : '';
+                                            });
+                                        }
+
+                                        input.value = filteredAvgPacketLoss;
+
+                                        var errorSpan = document.getElementById('avgPacketLossError');
+
+                                        if (filteredAvgPacketLoss !== avgPacketLoss) {
+                                            errorSpan.textContent = "Hanya angka dan titik yang diizinkan";
+                                        } else {
+                                            errorSpan.textContent = "";
+                                        }
+                                    }
+
+                                    function validateForm(event) {
+                                        var avgPacketLossInput = document.getElementById('editAvgPacketLoss');
+                                        var avgPacketLoss = avgPacketLossInput.value;
+                                        var errorSpan = document.getElementById('avgPacketLossError');
+
+                                        if (avgPacketLoss.trim() === '') {
+                                            event.preventDefault(); // Mencegah formulir disubmit
+                                            errorSpan.textContent = "Masukkan nilai";
+                                        } else {
+                                            errorSpan.textContent = "";
+                                        }
+                                    }
+                                </script>
+
+
+                            </div>
+
                         </div>
                     </form>
                 </div>

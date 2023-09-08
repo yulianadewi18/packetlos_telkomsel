@@ -36,6 +36,8 @@ $routes->get('/admin', 'Admin::index');
 $routes->get('/api/weeks', 'Api\Packet::weeks');
 $routes->get('/api/regencies', 'Api\Packet::regencies');
 $routes->get('/api/lossdata', 'Api\Packet::lossData');
+$routes->add('/admin/edit/(:any)', 'Admin::edit/$1');
+
 
 /*
  * --------------------------------------------------------------------
