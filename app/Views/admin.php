@@ -51,7 +51,7 @@
 
                     </thead>
                     <tbody>
-                        <?php $i = 1 + (25 * ($currentPage - 1)) ?>
+                        <?php $i = 1 ?>
                         <?php foreach ($packetloss as $p) : ?>
                             <?php if (empty($_POST['filter_status']) || $_POST['filter_status'] == $p['pl_status']) : ?>
 
@@ -67,7 +67,7 @@
                                     <td><?= $p['remark']; ?></td>
                                     <td>
                                         <form method="post">
-                                            <button type="submit" class="btn btn-warning">Edit</button>
+                                            <button type="button" class="btn btn-warning edit-button" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $p['site_id']; ?>">Edit</button>
                                         </form>
                                                    
                                     </td>
@@ -76,10 +76,46 @@
                         <?php endforeach ?>
                     </tbody>
                 </table>
-                <?= $pager->links('packetlos', 'admin_pagination'); ?>
+
             </div>
         </div>
     </main>
 </div>
+
+<?php foreach ($packetloss as $p) : ?>
+    <div class="modal fade" id="modalUbah<?= $p['site_id']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="editForm<?= $p['site_id']; ?>" action="<?php echo base_url('admin/edit') ?>">
+                        <!-- Hidden input for site_id -->
+                        <input type="hidden" name="site_id" value="<?= $p['site_id']; ?>">
+                        <div class="mb-3">
+                            <label for="pl_status" class="form-label">PL Status</label>
+                            <select class="form-select" name="pl_status">
+                                <option value="SPIKE" <?= ($p['pl_status'] == 'SPIKE') ? 'selected' : ''; ?>>SPIKE</option>
+                                <option value="CLEAR" <?= ($p['pl_status'] == 'CLEAR') ? 'selected' : ''; ?>>CLEAR</option>
+                                <option value="CONSECUTIVE" <?= ($p['pl_status'] == 'CONSECUTIVE') ? 'selected' : ''; ?>>CONSECUTIVE</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="editForm<?= $p['site_id']; ?>" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<script>
+    new DataTable('#myTable');
+</script>
 
 <?= $this->endSection(); ?>

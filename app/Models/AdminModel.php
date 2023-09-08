@@ -20,4 +20,8 @@ class AdminModel extends Model
         $builder->orLike('kabupaten', $keyword);
         return $builder;
     }
+    public function editData($table, $data, $where)
+    {
+        return $this->db->table($table)->update($data, $where);
+    }
 }
