@@ -59,20 +59,27 @@
 
                 </div>
             </div>
-        </div>
+            <div class="row mt-4">
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <?php foreach ($results as $r) : ?>
+                                <label for=""><?= $r['new_nop']; ?></label>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="<?= $r['percentage']; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $r['percentage']; ?>%">
+                                        <?= $r['percentage']; ?> %
+                                    </div>
+                                </div>
 
-        <div class="row mt-4">
-            <!-- Elemen Canvas untuk Line Chart (sebelah kiri) -->
-            <div class="col-sm-4 mb-3 mb-sm-0">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="columnNopChart">
+                            <?php endforeach ?>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
+
+
 
 </div>
 </div>

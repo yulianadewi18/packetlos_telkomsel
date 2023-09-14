@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\DashboardModel;
+use App\Models\ProgressModel;
 
 class Home extends BaseController
 {
@@ -25,7 +26,11 @@ class Home extends BaseController
         $data['pl_consecutive'] = $model->where('week', ['week' => $weekval])->where('pl_status', 'CONSECUTIVE')->countAllResults();
 
         $data['packetloss'] = $model->findAll();
-        // dd($data['regencyCounts']);
+
+        //new model for percentage
+        $trial = new ProgressModel();
+        $data['results'] = $trial->getPercen();
+
         return view('index', $data);
     }
 
