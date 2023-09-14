@@ -63,19 +63,50 @@
                 <div class="col-sm-4 mb-3 mb-sm-0">
                     <div class="card">
                         <div class="card-body">
-                            <?php foreach ($results as $r) : ?>
-                                <label for=""><?= $r['new_nop']; ?></label>
-                                <div class="progress mb-2">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="<?= $r['percentage']; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $r['percentage']; ?>%">
-                                        <?= $r['percentage']; ?> %
+                            <?php
+                            // Urutkan hasil berdasarkan persentase secara menurun
+                            usort($results, function ($a, $b) {
+                                return $b['percentage'] <=> $a['percentage'];
+                            });
+
+                            // Ambil hanya 7 teratas
+                            $topResults = array_slice($results, 0, 7);
+
+                            foreach ($topResults as $index => $r) :
+                                $percentage = $r['percentage'];
+                                $progressClass = '';
+
+                                switch (true) {
+                                    case ($percentage >= 90):
+                                        $progressClass = 'bg-success'; // Hijau
+                                        break;
+                                    case ($percentage >= 80):
+                                        $progressClass = 'bg-warning'; // Kuning
+                                        break;
+                                    case ($percentage >= 70):
+                                        $progressClass = 'bg-danger'; // Merah
+                                        break;
+                                    default:
+                                        $progressClass = 'bg-secondary'; // Warna default jika tidak ada yang cocok
+                                        break;
+                                }
+                            ?>
+
+                                <div class="d-flex align-items-center mb-2">
+                                    <label class="mr-3" style="font-size: 12px;"><?= $r['new_nop']; ?></label>
+                                    <?php if ($index < 3) : ?>
+                                        <i class="fas fa-trophy text-warning p-2"></i> <!-- Ganti dengan ikon pemenang yang sesuai -->
+                                    <?php endif; ?>
+                                </div>
+                                <div class="progress mb-2" style="height: 15px;">
+                                    <div class="progress-bar <?= $progressClass; ?>" role="progressbar" aria-valuenow="<?= $percentage; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $percentage; ?>%;">
+                                        <?= $percentage; ?>%
                                     </div>
                                 </div>
-
                             <?php endforeach ?>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
