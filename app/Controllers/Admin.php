@@ -6,25 +6,22 @@ use App\Models\AdminModel;
 
 class Admin extends BaseController
 {
+    protected $filters = ['auth'];
+
     public function index()
     {
-        $currentPage = $this->request->getVar('page_packetlos') ? $this->request->getVar('page_packetlos') :
-            1;
 
+        //data packet loss dari database filter nop
+        $session = session();
+        $nop = $session->nop;
         $Adminmodel = new AdminModel();
 
         $keyword = $this->request->getVar('keyword');
-        if ($keyword) {
-            $admin = $Adminmodel->search($keyword);
-        } else {
-            $admin = $Adminmodel;
+        // dd($keyword);
+        $data['packetloss'] = $Adminmodel->where('nop', $nop)->findAll();
+        if ($keyword != null || !empty($keyword)) {
+            $data['packetloss'] = $Adminmodel->search($keyword, $nop);
         }
-
-        $data['packetloss'] = $Adminmodel->findAll();
-        // $data['packetloss'] = $admin->orderBy('week', 'desc')->paginate(25, 'packetlos');
-        // $data['pager'] = $Adminmodel->pager;
-        // $data['currentPage'] = $currentPage;
-        // dd($data['packetloss']);
         return view('admin', $data);
     }
     public function edit()

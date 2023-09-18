@@ -9,16 +9,22 @@ class AdminModel extends Model
     protected $table = 'packetlos';
     protected $primaryKey = 'site_id';
 
-    public function search($keyword)
+    public function search($keyword, $nop)
     {
-        $builder = $this->table('packetlos');
-        $builder->like('site_id', $keyword);
-        $builder->orLike('nop', $keyword);
-        $builder->orLike('pl_status', $keyword);
-        $builder->orLike('week', $keyword);
-        $builder->orLike('avg_packet_loss', $keyword);
-        $builder->orLike('kabupaten', $keyword);
-        return $builder;
+        $builder = $this->builder();
+
+        $builder->groupStart()
+            ->like('site_id', $keyword)
+            ->orLike('pl_status', $keyword)
+            ->orLike('week', $keyword)
+            ->orLike('avg_packet_loss', $keyword)
+            ->orLike('kabupaten', $keyword)
+            ->orLike('nop', $keyword)
+            ->groupEnd();
+
+        $builder->where('nop', $nop);
+
+        return $builder->get()->getResultArray();
     }
     public function editData($table, $data, $where)
     {

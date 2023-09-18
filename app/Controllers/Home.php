@@ -8,6 +8,7 @@ use App\Models\ProgressModel;
 class Home extends BaseController
 {
     protected $dashboardModel;
+    protected $filters = ['auth'];
     public function __construct()
     {
         $this->dashboardModel = new DashboardModel();

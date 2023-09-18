@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class PacketLossModel extends Model
 {
+    // 
     protected $DBGroup          = 'default';
     protected $table            = 'packetlos';
     protected $primaryKey       = 'site_id';

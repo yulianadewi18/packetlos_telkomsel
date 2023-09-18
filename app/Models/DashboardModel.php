@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class DashboardModel extends Model
 {
+    // Keys
     protected $table = 'packetlos';
     protected $primaryKey = 'site_id';
 

@@ -55,28 +55,35 @@
                     </thead>
                     <tbody>
                         <?php $i = 1 ?>
-                        <?php foreach ($packetloss as $p) : ?>
-                            <?php if (empty($_POST['filter_status']) || $_POST['filter_status'] == $p['pl_status']) : ?>
-
-                                <tr>
-                                    <th scope="row"><?= $i++; ?></th>
-                                    <td><?= $p['week']; ?></td>
-                                    </td>
-                                    <td><?= $p['site_id']; ?></td>
-                                    <td><?= $p['nop']; ?></td>
-                                    <td><?= $p['kabupaten']; ?></td>
-                                    <td><?= $p['avg_packet_loss']; ?></td>
-                                    <td><?= $p['pl_status']; ?></td>
-                                    <td><?= $p['remark']; ?></td>
-                                    <td>
-                                        <form method="post">
-                                            <button type="button" class="btn btn-warning edit-button" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $p['site_id']; ?>">Edit</button>
-                                        </form>
-                                                   
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                        <?php endforeach ?>
+                        <?php if (!empty($packetloss)) {
+                            foreach ($packetloss as $p) : ?>
+                                <?php if (empty($_POST['filter_status']) || $_POST['filter_status'] == $p['pl_status']) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $i++; ?></th>
+                                        <td><?= $p['week']; ?></td>
+                                        </td>
+                                        <td><?= $p['site_id']; ?></td>
+                                        <td><?= $p['nop']; ?></td>
+                                        <td><?= $p['kabupaten']; ?></td>
+                                        <td><?= $p['avg_packet_loss']; ?></td>
+                                        <td><?= $p['pl_status']; ?></td>
+                                        <td><?= $p['remark']; ?></td>
+                                        <td>
+                                            <form method="post">
+                                                <button type="button" class="btn btn-warning edit-button" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $p['site_id']; ?>">Edit</button>
+                                            </form>
+                                                       
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                        <?php endforeach;
+                        } else {
+                        ?>
+<tr>
+    <th colspan="9" class="text-center">Tidak ada data.</th>
+</tr>
+                        <?php
+                        } ?>
                     </tbody>
                 </table>
 
