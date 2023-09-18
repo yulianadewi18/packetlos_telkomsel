@@ -65,9 +65,9 @@
                         <div class="card-body">
                             <?php
                             // Urutkan hasil berdasarkan persentase secara menurun
-                            usort($results, function ($a, $b) {
-                                return $b['percentage'] <=> $a['percentage'];
-                            });
+                            // usort($results, function ($a, $b) {
+                            //     return $b['percentage'] <=> $a['percentage'];
+                            // });
 
                             // Ambil hanya 7 teratas
                             $topResults = array_slice($results, 0, 7);
@@ -75,32 +75,50 @@
                             foreach ($topResults as $index => $r) :
                                 $percentage = $r['percentage'];
                                 $progressClass = '';
-
                                 switch (true) {
-                                    case ($percentage >= 90):
-                                        $progressClass = 'bg-success'; // Hijau
+                                    case ($index == 0):
+                                        $progressClass = 'background-color: #38B000'; // Hijau
                                         break;
-                                    case ($percentage >= 80):
-                                        $progressClass = 'bg-warning'; // Kuning
+                                    case ($index == 1):
+                                        $progressClass = 'background-color: #008000';
                                         break;
-                                    case ($percentage >= 70):
-                                        $progressClass = 'bg-danger'; // Merah
+                                    case ($index == 2):
+                                        $progressClass = 'background-color: #007200';
+                                        break;
+                                    case ($index == 3):
+                                        $progressClass = 'background-color: #004B23';
+                                        break;
+                                    case ($index == 4):
+                                        $progressClass = 'background-color: #6A040F';
+                                        break;
+                                    case ($index == 5):
+                                        $progressClass = 'background-color: #9D0208';
+                                        break;
+                                    case ($index == 6):
+                                        $progressClass = 'background-color: #D00000'; //Merah
                                         break;
                                     default:
                                         $progressClass = 'bg-secondary'; // Warna default jika tidak ada yang cocok
                                         break;
                                 }
                             ?>
-
-                                <div class="d-flex align-items-center mb-2">
-                                    <label class="mr-3" style="font-size: 12px;"><?= $r['new_nop']; ?></label>
-                                    <?php if ($index < 3) : ?>
-                                        <i class="fas fa-trophy text-warning p-2"></i> <!-- Ganti dengan ikon pemenang yang sesuai -->
-                                    <?php endif; ?>
-                                </div>
-                                <div class="progress mb-2" style="height: 15px;">
-                                    <div class="progress-bar <?= $progressClass; ?>" role="progressbar" aria-valuenow="<?= $percentage; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $percentage; ?>%;">
-                                        <?= $percentage; ?>%
+                                <div class="row g-0 text-left ">
+                                    <div class="col-4">
+                                        <div class="label">
+                                            <label class="" style="font-size: 12px;"><?= $r['new_nop']; ?></label>
+                                            <?php if ($index < 3) : ?>
+                                                <i class="fas fa-trophy text-warning "></i> <!-- Ganti dengan ikon pemenang yang sesuai -->
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 my-1">
+                                        <div class="progress ">
+                                            <div class="progress-bar <?= $progressClass; ?>" role="progressbar" aria-valuenow="<?= $percentage; ?>" aria-valuemin="0" aria-valuemax="100" style="<?= $progressClass ?>; width: <?= $percentage; ?>% ; background-color:;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 my-1">
+                                        <div class="text-center" style="color: black; font-size: 9px;"><?= $percentage; ?> %</div>
                                     </div>
                                 </div>
                             <?php endforeach ?>
