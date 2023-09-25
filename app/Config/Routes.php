@@ -33,7 +33,7 @@ $routes->set404Override();
 $routes->get('/', 'Login::index');
 $routes->get('/admin', 'Admin::index', ['filter' => 'auth']);
 $routes->get('/dashboard', 'Home::index', ['filter' => 'auth']);
-
+$routes->get('/zero', 'Dashboardzero::index');
 $routes->get('/api/weeks', 'Api\Packet::weeks');
 $routes->get('/api/regencies', 'Api\Packet::regencies');
 $routes->get('/api/lossdata', 'Api\Packet::lossData');
