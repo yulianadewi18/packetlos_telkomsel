@@ -36,7 +36,7 @@ $session = session();
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Admin
                     </a>
-                    <a class="nav-link" href="/zero">
+                    <a class="nav-link" href="/Dashboardzero">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard Zero
                     </a>

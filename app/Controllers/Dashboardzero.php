@@ -6,12 +6,13 @@ use App\Models\DashboardZeroModel;
 
 class Dashboardzero extends BaseController
 {
+    protected $filters = ['auth'];
     public function index()
     {
         $Zeromodel = new DashboardZeroModel();
 
-        // $data['packetloss'] = $Adminmodel->findAll();
+        $data['zero'] = $Zeromodel->findAll();
 
-        return view('dashboardzero');
+        return view('dashboardzero', $data);
     }
 }

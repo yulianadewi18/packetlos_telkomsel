@@ -12,12 +12,6 @@
                     <h1 class="mt-4 mb-4">Admin</h1>
                 </div>
                 <div class="col-4">
-                    <form class="mt-4 mb-4" method="post">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Cari" name="keyword" aria-label="Cari" aria-describedby="btnNavbarSearch" />
-                            <button class="btn btn-primary" id="btnNavbarSearch" name="submit" type="submit"><i class="fas fa-search"> </i></button>
-                        </div>
-                    </form>
                 </div>
                 <!-- Filter by Status -->
                 <div class="col-4">
@@ -37,9 +31,9 @@
             </div>
 
 
-            <div class="table">
-                <table class="table border ">
-                    <thead class="table-light ">
+            <div class="table table-responsive">
+                    <table id="tableAdmin" class="table table-striped" style="width:100%">
+                        <thead>
                         <tr>
                             <th scope="col">No</th>
                             <th scope="col">Week</th>
@@ -76,12 +70,12 @@
                                         </td>
                                     </tr>
                                 <?php endif; ?>
-                        <?php endforeach;
+                            <?php endforeach;
                         } else {
-                        ?>
-<tr>
-    <th colspan="9" class="text-center">Tidak ada data.</th>
-</tr>
+                            ?>
+                            <tr>
+                                <th colspan="9" class="text-center">Tidak ada data.</th>
+                            </tr>
                         <?php
                         } ?>
                     </tbody>
@@ -175,7 +169,7 @@
 
 
 <script>
-    new DataTable('#myTable');
+    new DataTable('#tableAdmin');
 </script>
 
 <?= $this->endSection(); ?>
