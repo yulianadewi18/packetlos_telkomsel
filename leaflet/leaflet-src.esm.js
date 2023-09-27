@@ -5075,7 +5075,7 @@ var Layers = Control.extend({
 		}
 
 		var link = this._layersLink = create$1('a', className + '-toggle', container);
-		link.href = '#';
+		link.href = '';
 		link.title = 'Layers';
 		link.setAttribute('role', 'button');
 
@@ -5374,7 +5374,7 @@ var Zoom = Control.extend({
 	_createButton: function (html, title, className, container, fn) {
 		var link = create$1('a', className, container);
 		link.innerHTML = html;
-		link.href = '#';
+		link.href = '';
 		link.title = title;
 
 		/*
