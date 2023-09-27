@@ -1,11 +1,7 @@
 <?= $this->extend('layout/template'); ?>
 <?= $this->section('content'); ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
-
-
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap4.min.css">
 
 <div id="layoutSidenav_content">
     <main>
@@ -23,7 +19,7 @@
                             //     maxZoom: 19,
                             //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             // }).addTo(map);
-                            var packet = <?php echo json_encode($zero); ?>;
+                            var packet = <?php echo json_encode($zerotrafic_load); ?>;
                             // console.log(packet);
 
                             // for (let i = 0; i < packet.length; i++) {
@@ -35,7 +31,7 @@
                             //     }
 
                             //     var markerIcon = new L.Icon({
-                            //         iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/${markerColor}.png`,
+                            //         iconUrl: https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/${markerColor}.png,
                             //         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
                             //         iconSize: [25, 41],
                             //         iconAnchor: [12, 41],
@@ -60,13 +56,162 @@
                 <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
+
+                            <script src="https://code.highcharts.com/highcharts.js"></script>
+                            <script src="https://code.highcharts.com/modules/accessibility.js"></script> <!-- Include the Accessibility module -->
+                            <div id="dataline"></div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Data untuk line charts
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "http://localhost:8080/dashboardzero/chartdata",
+                                        success: function(response) {
+                                            const zerodate = response.zerodate;
+                                            console.log(zerodate);
+                                            dataline(zerodate);
+                                        },
+                                        error: function() {
+                                            console.error('An error occurred while making the AJAX request.');
+                                        }
+                                    });
+                                });
+
+                                function dataline(zerodate) {
+                                    zerodate.forEach(item => {
+                                        item.traffic_count = parseInt(item.traffic_count);
+                                        item.payload_count = parseInt(item.payload_count);
+                                    });
+
+                                    Highcharts.chart('dataline', {
+                                        title: {
+                                            text: 'TREND DATA',
+                                            align: 'left'
+                                        },
+
+                                        yAxis: {
+                                            title: {
+                                                text: 'VALUE'
+                                            }
+                                        },
+
+                                        xAxis: {
+
+                                            categories: zerodate.map(item => item.date)
+                                        },
+
+                                        legend: {
+                                            layout: 'vertical',
+                                            align: 'right',
+                                            verticalAlign: 'middle'
+                                        },
+
+                                        series: [{
+                                            name: 'Traffic',
+                                            data: zerodate.map(item => item.traffic_count),
+                                            color: 'red'
+                                        }, {
+                                            name: 'Payload',
+                                            data: zerodate.map(item => item.payload_count),
+                                            color: 'yellow'
+                                        }],
+
+                                        responsive: {
+                                            rules: [{
+                                                condition: {
+                                                    maxWidth: 500
+                                                },
+                                                chartOptions: {
+                                                    legend: {
+                                                        layout: 'horizontal',
+                                                        align: 'center',
+                                                        verticalAlign: 'bottom'
+                                                    }
+                                                }
+                                            }]
+                                        }
+
+                                    });
+                                }
+                            </script>
+
+
                         </div>
                     </div>
                 </div>
+
                 <!-- NOP Barchart -->
                 <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
+                            <div id="barChartNOP"></div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Data untuk line charts
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "http://localhost:8080/dashboardzero/barchart",
+                                        success: function(response) {
+                                            const dateUpdate = response.dateUpdate;
+                                            console.log(dateUpdate);
+                                            dataNOP(dateUpdate);
+                                            trendDataNOP(dateUpdate);
+                                        },
+                                        error: function() {
+                                            console.error('An error occurred while making the AJAX request.');
+                                        }
+                                    });
+                                });
+
+                                function dataNOP(dateUpdate) {
+                                    dateUpdate.forEach(item => {
+                                        item.traffic_count = parseInt(item.traffic_count);
+                                        item.payload_count = parseInt(item.payload_count);
+                                    });
+
+                                    Highcharts.chart('barChartNOP', {
+                                        chart: {
+                                            type: 'column'
+                                        },
+                                        title: {
+                                            text: 'Data TRAFFIC-PAYLOAD NOP'
+                                        },
+                                        xAxis: {
+                                            categories: dateUpdate.map(item => item.nop),
+                                            crosshair: true
+                                        },
+                                        yAxis: {
+                                            title: {
+                                                text: 'Count'
+                                            },
+                                            min: 0
+                                        },
+                                        plotOptions: {
+                                            column: {
+                                                pointPadding: 0.2,
+                                                borderWidth: 0
+                                            }
+                                        },
+                                        tooltip: {
+                                            shared: true
+                                        },
+                                        series: [{
+                                            name: 'TRAFFIC',
+                                            data: dateUpdate.map(item => item.traffic_count),
+                                            color: 'red' // Yellow for SPIKE
+                                        }, {
+                                            name: 'PAYLOAD',
+                                            data: dateUpdate.map(item => item.payload_count),
+                                            color: 'yellow' // Green for CLEAR
+                                        }, ],
+                                        credits: {
+                                            enabled: false
+                                        }
+                                    });
+
+
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -74,105 +219,158 @@
                 <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
+                            <div id="lineChartNop"></div>
+                            <script>
+                                function trendDataNOP(dateUpdate) {
+                                    dateUpdate.forEach(item => {
+                                        item.traffic_count = parseInt(item.traffic_count);
+                                        item.payload_count = parseInt(item.payload_count);
+                                    });
+
+                                    Highcharts.chart('lineChartNop', {
+                                        title: {
+                                            text: 'TREND DATA NOP',
+                                            align: 'left'
+                                        },
+
+                                        yAxis: {
+                                            title: {
+                                                text: 'VALUE'
+                                            }
+                                        },
+
+                                        xAxis: {
+
+                                            categories: dateUpdate.map(item => item.nop)
+                                        },
+
+                                        legend: {
+                                            layout: 'vertical',
+                                            align: 'right',
+                                            verticalAlign: 'middle'
+                                        },
+
+                                        series: [{
+                                            name: 'Traffic',
+                                            data: dateUpdate.map(item => item.traffic_count),
+                                            color: 'red'
+                                        }, {
+                                            name: 'Payload',
+                                            data: dateUpdate.map(item => item.payload_count),
+                                            color: 'yellow'
+                                        }],
+
+                                        responsive: {
+                                            rules: [{
+                                                condition: {
+                                                    maxWidth: 500
+                                                },
+                                                chartOptions: {
+                                                    legend: {
+                                                        layout: 'horizontal',
+                                                        align: 'center',
+                                                        verticalAlign: 'bottom'
+                                                    }
+                                                }
+                                            }]
+                                        }
+
+                                    });
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <div class="card">
+            <div class="card mt-3">
                 <div class="card-body">
-                    <div class="container-fluid px-4 ">
-
-                        <div class="row">
-                            <div class="col">
-                            </div>
-                            <div class="col-4">
-                            </div>
-                            <!-- Filter by Status -->
-                            <div class="col-4">
-                                <form class="mt-4 mb-4" method="post">
-                                    <div class="input-group">
-                                        <select class="form-select" name="filter_nop">
-                                            <option value="">Filter by NOP</option>
-                                            <option value="LAMONGAN">LAMONGAN</option>
-                                            <option value="MALANG">MALANG</option>
-                                            <option value="JEMBER">JEMBER</option>
-                                            <option value="SURABAYA">SURABAYA</option>
-                                            <option value="KEDIRI">KEDIRI</option>
-                                            <option value="MADIUN">MADIUN</option>
-                                            <option value="SIDOARJO">SIDOARJO</option>
-                                            <!-- Add more status options as needed -->
-                                        </select>
-                                        <button class="btn btn-primary" type="submit"><i class="fas fa-filter"></i> Filter</button>
-
-                                    </div>
-                                </form>
-
-
-
-                            </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <form class="mt-4 mb-4" method="post">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Cari" name="keyword" aria-label="Cari" aria-describedby="btnNavbarSearch" />
+                                    <button class="btn btn-primary" id="btnNavbarSearch" name="submit" type="submit"><i class="fas fa-search"></i></button>
+                                </div>
+                            </form>
                         </div>
-
-
-                        <div class="table table-responsive">
-                            <table id="tableZero" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Site ID</th>
-                                        <th>Tech</th>
-                                        <th>Date</th>
-                                        <th>Cell Name</th>
-                                        <th>Site Name</th>
-                                        <th>Kecamatan</th>
-                                        <th>Kabupaten</th>
-                                        <th>Provinsi</th>
-                                        <th>NOP</th>
-                                        <th>Remark</th>
-                                    </tr>
-
-                                </thead>
-                                <tbody>
-                                    <?php $i = 1 ?>
-                                    <?php if (!empty($zero)) {
-                                        foreach ($zero as $z) : ?>
-                                            <?php if (empty($_POST['filter_nop']) || $_POST['filter_nop'] == $z['nop']) :  ?>
-
-                                                <tr>
-                                                    <td scope="row"><?= $i++; ?></td>
-                                                    <td><?= $z['site_id']; ?></td>
-                                                    <td><?= $z['tech']; ?></td>
-                                                    <td><?= $z['date']; ?></td>
-                                                    <td><?= $z['cell_name']; ?></td>
-                                                    <td><?= $z['site_name']; ?></td>
-                                                    <td><?= $z['kecamatan']; ?></td>
-                                                    <td><?= $z['kabupaten']; ?></td>
-                                                    <td><?= $z['provinsi']; ?></td>
-                                                    <td><?= $z['nop']; ?></td>
-                                                    <td><?= $z['remark']; ?></td>
-
-                                                </tr>
-                                            <?php endif; ?>
-                                        <?php endforeach;
-                                    } else {
-                                        ?>
-                                        <tr>
-                                            <th colspan="9" class="text-center">Tidak ada data.</th>
-                                        </tr>
-                                    <?php
-                                    } ?>
-                                </tbody>
-                            </table>
-
+                        <!-- Filter by Status -->
+                        <div class="col-4">
+                            <form class="mt-4 mb-4" method="post">
+                                <div class="input-group">
+                                    <select class="form-select" name="filter_nop">
+                                        <option value="">Filter by NOP</option>
+                                        <option value="JEMBER">JEMBER</option>
+                                        <option value="KEDIRI">KEDIRI</option>
+                                        <option value="LAMONGAN">LAMONGAN</option>
+                                        <option value="MADIUN">MADIUN</option>
+                                        <option value="MALANG">MALANG</option>
+                                        <option value="SIDOARJO">SIDOARJO</option>
+                                        <option value="SURABAYA">SURABAYA</option>
+                                        <!-- Add more status options as needed -->
+                                    </select>
+                                    <button class="btn btn-primary" type="submit"><i class="fas fa-filter"></i> Filter</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-    </main>
+
+                    <div class="table-responsive">
+                        <table id="myTable" class="table border-collapse width:100%">
+                            <thead class="table-light ">
+                                <tr class="">
+                                    <th> </th>
+                                    <th>Tech</th>
+                                    <th>Date</th>
+                                    <th>Cell Name</th>
+                                    <th>Site ID</th>
+                                    <th>Site Name</th>
+                                    <th>Kecamatan</th>
+                                    <th>Kabupaten</th>
+
+                                    <th>NOP</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1 ?>
+                                <?php foreach ($zerotrafic_load as $z) : ?>
+                                    <?php if (empty($_POST['filter_nop']) || $_POST['filter_nop'] === $z['nop']) : ?>
+                                        <tr>
+                                            <th><?= $i++; ?></th>
+                                            <td><?= $z['tech']; ?></td>
+                                            <td><?= $z['date']; ?></td>
+                                            <td><?= $z['cell_name']; ?></td>
+                                            <td><?= $z['site_id']; ?></td>
+                                            <td><?= $z['site_name']; ?></td>
+                                            <td><?= $z['kecamatan']; ?></td>
+                                            <td><?= $z['kabupaten']; ?></td>
+
+                                            <td><?= $z['nop']; ?></td>
+                                            <td><?= $z['remark']; ?></td>
+
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="table table-responsive">
+
+
+                </div> -->
+        </div>
+</div>
 </div>
 </main>
+
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -182,20 +380,22 @@
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
 
-
 <script>
     $(document).ready(function() {
-        let table = new DataTable('#tableZero', {
-            //$('#myTable').DataTable( {
-            lengthChange: false,
+        let table = new DataTable('#myTable', {
+
             dom: 'Bfrtip',
             buttons: [
-                'print', 'excel'
+                'print', 'copy', 'excel', 'pdf'
             ]
         });
 
         table.buttons().container()
             .appendTo('#example_wrapper .col-md-6:eq(0)');
     });
+</script>
+
+<script>
+
 </script>
 <?= $this->endSection(); ?>

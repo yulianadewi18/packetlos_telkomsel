@@ -6,13 +6,28 @@ use App\Models\DashboardZeroModel;
 
 class Dashboardzero extends BaseController
 {
-    protected $filters = ['auth'];
     public function index()
     {
-        $Zeromodel = new DashboardZeroModel();
+        $zeromodel = new DashboardZeroModel();
 
-        $data['zero'] = $Zeromodel->findAll();
+        $data['zerotrafic_load'] = $zeromodel->orderBy('date', 'DESC')->findAll();
+
+        // $data['dateUpdate'] = $zeromodel->getDateUpdate();
+        // dd($data['dateUpdate']);
 
         return view('dashboardzero', $data);
+    }
+    public function chartdata()
+    {
+        $zeromodel = new DashboardZeroModel();
+        $data['zerodate'] = $zeromodel->getLineData();
+        return response()->setJson($data);
+    }
+
+    public function barchart()
+    {
+        $zeromodel = new DashboardZeroModel();
+        $data['dateUpdate'] = $zeromodel->getDateUpdate();
+        return response()->setJson($data);
     }
 }
