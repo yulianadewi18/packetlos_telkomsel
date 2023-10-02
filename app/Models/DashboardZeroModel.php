@@ -35,4 +35,11 @@ class DashboardZeroModel extends Model
         }
         return $query->getResult('array');
     }
+    public function getFilteredData($nop = null) 
+    {
+        if($nop) {
+            $this->where('nop', $nop)->get();
+        }
+        return $this->findAll();
+    }
 }

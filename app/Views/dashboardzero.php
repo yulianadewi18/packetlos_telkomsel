@@ -1,5 +1,6 @@
 <?= $this->extend('layout/template'); ?>
 <?= $this->section('content'); ?>
+<?= csrf_field() ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap4.min.css">
 
@@ -297,9 +298,9 @@
                         </div>
                         <!-- Filter by Status -->
                         <div class="col-4">
-                            <form class="mt-4 mb-4" method="post">
+                            <form class="mt-4 mb-4" method="post" name="filter-form">
                                 <div class="input-group">
-                                    <select class="form-select" name="filter_nop">
+                                    <select class="form-select" name="filter_nop" id="filter">
                                         <option value="">Filter by NOP</option>
                                         <option value="JEMBER">JEMBER</option>
                                         <option value="KEDIRI">KEDIRI</option>
@@ -310,12 +311,11 @@
                                         <option value="SURABAYA">SURABAYA</option>
                                         <!-- Add more status options as needed -->
                                     </select>
-                                    <button class="btn btn-primary" type="submit"><i class="fas fa-filter"></i> Filter</button>
+                                    <button class="btn btn-primary" type="button" id="filterButton"><i class="fas fa-filter"></i> Filter</button>
                                 </div>
                             </form>
                         </div>
                     </div>
-
                     <div class="table-responsive">
                         <table id="myTable" class="table border-collapse width:100%">
                             <thead class="table-light ">
@@ -333,26 +333,8 @@
                                     <th>Remark</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php $i = 1 ?>
-                                <?php foreach ($zerotrafic_load as $z) : ?>
-                                    <?php if (empty($_POST['filter_nop']) || $_POST['filter_nop'] === $z['nop']) : ?>
-                                        <tr>
-                                            <th><?= $i++; ?></th>
-                                            <td><?= $z['tech']; ?></td>
-                                            <td><?= $z['date']; ?></td>
-                                            <td><?= $z['cell_name']; ?></td>
-                                            <td><?= $z['site_id']; ?></td>
-                                            <td><?= $z['site_name']; ?></td>
-                                            <td><?= $z['kecamatan']; ?></td>
-                                            <td><?= $z['kabupaten']; ?></td>
-
-                                            <td><?= $z['nop']; ?></td>
-                                            <td><?= $z['remark']; ?></td>
-
-                                        </tr>
-                                    <?php endif; ?>
-                                <?php endforeach ?>
+                            <tbody id="filtered-data">
+                                <?= view('dashboardzero_rows', ['zerotrafic_load' => $zerotrafic_load]); ?>
                             </tbody>
                         </table>
 
@@ -379,23 +361,19 @@
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
-
 <script>
-    $(document).ready(function() {
-        let table = new DataTable('#myTable', {
-
-            dom: 'Bfrtip',
-            buttons: [
-                'print', 'copy', 'excel', 'pdf'
-            ]
-        });
-
-        table.buttons().container()
-            .appendTo('#example_wrapper .col-md-6:eq(0)');
+  
+    var table = $('#myTable').DataTable({
+        dom: 'Bfrtip',
+        buttons: ['print', 'copy', 'excel', 'pdf']
     });
-</script>
-
-<script>
+    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+    
+    $('#filterButton').on('click', function() {
+        let selectedValue = $('#filter').val();
+        table.search(selectedValue).draw();
+    });
+   
 
 </script>
 <?= $this->endSection(); ?>
