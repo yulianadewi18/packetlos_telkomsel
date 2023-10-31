@@ -25,15 +25,15 @@
                             <tr>
                                 <td>
                                     <?php if ($hierarki === 'kabupaten') : ?>
-                                        <a href="<?= base_url('data/kecamatan/' . $row['kabupaten']); ?>">
+                                        <a href="<?= base_url('data/kecamatan/' . $row['kabupaten']); ?>" style="color: black; text-decoration: none;">
                                             <?= $row['kabupaten']; ?>
                                         </a>
                                     <?php elseif ($hierarki === 'kecamatan') : ?>
-                                        <a href="<?= base_url('data/site/' . $row['kecamatan']); ?>">
+                                        <a href="<?= base_url('data/site/' . $row['kecamatan']); ?>" style="color: black; text-decoration: none;">
                                             <?= $row['kecamatan']; ?>
                                         </a>
                                     <?php else : ?>
-                                        <?= $row['site_id']; ?>
+                                        <span style="color: black; text-decoration: none;"><?= $row['site_id']; ?></span>
                                     <?php endif; ?>
                                 </td>
                                 <td>Rp <?= number_format($dataModel->convertPayloadToNumeric($row['total_payload']), 2, ',', '.'); ?></td>
@@ -50,9 +50,9 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script>
-    // $(document).ready(function() {
-    //     $('#table-payload').DataTable();
-    // });
-    new DataTable('#table-payload');
+    $(document).ready(function() {
+        $('#table-payload').DataTable();
+    });
+    // new DataTable('#table-payload');
 </script>
 <?= $this->endSection(); ?>
