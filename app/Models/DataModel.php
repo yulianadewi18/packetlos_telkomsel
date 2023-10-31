@@ -25,6 +25,7 @@ class DataModel extends Model
         $builder = $this->select('kabupaten, SUM(payload) as total_payload')
             ->groupBy('kabupaten')
             ->orderBy('total_payload', 'asc')
+            ->limit(10)
             ->get();
 
         return $builder->getResultArray();
@@ -36,6 +37,7 @@ class DataModel extends Model
             ->where('kabupaten', $kabupaten)
             ->groupBy('kecamatan')
             ->orderBy('total_payload', 'asc')
+            ->limit(10)
             ->get();
 
         return $builder->getResultArray();
@@ -46,6 +48,7 @@ class DataModel extends Model
         $builder = $this->select('site_id, payload as total_payload')
             ->where('kecamatan', $kecamatan)
             ->orderBy('total_payload', 'asc')
+            ->limit(10)
             ->get();
 
         return $builder->getResultArray();
