@@ -12,8 +12,8 @@ class Dashboardzero extends BaseController
       
         $data['zerotrafic_load'] = $zeromodel->orderBy('date', 'DESC')->findAll();
 
+
         // $data['dateUpdate'] = $zeromodel->getDateUpdate();
-        // dd($data['dateUpdate']);
 
         return view('dashboardzero', $data);
     }

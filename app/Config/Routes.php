@@ -33,17 +33,12 @@ $routes->set404Override();
 $routes->get('/', 'Login::index');
 $routes->get('/admin', 'Admin::index', ['filter' => 'auth']);
 $routes->get('/dashboard', 'Home::index', ['filter' => 'auth']);
-$routes->get('/DataController', 'DataController::index');
+$routes->get('/payload', 'Payload::index');
 $routes->get('/zero', 'Dashboardzero::index');
 $routes->get('/api/weeks', 'Api\Packet::weeks');
 $routes->get('/api/regencies', 'Api\Packet::regencies');
 $routes->get('/api/lossdata', 'Api\Packet::lossData');
 $routes->add('/admin/edit/(:any)', 'Admin::edit/$1');
-$routes->get('data', 'DataController::index'); // Menampilkan data kabupaten
-$routes->get('data/kecamatan/(:segment)', 'DataController::index/kecamatan/$1'); // Menampilkan data kecamatan berdasarkan kabupaten
-$routes->get('data/site/(:segment)', 'DataController::index/site/$1'); // Menampilkan data site id berdasarkan kecamatan
-$routes->get('data/(:segment)(/(:segment))', 'DataController::index/$1/$2');
-
 
 
 /*

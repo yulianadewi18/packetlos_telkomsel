@@ -29,7 +29,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => '',
-        'database' => 'telkomsel',
+        'database' => 'db_telkomsel',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
