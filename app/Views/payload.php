@@ -8,15 +8,41 @@
 $selectedKabupaten = $_GET['kabupaten'] ?? null;
 $selectedKecamatan = $_GET['kecamatan'] ?? null;
 ?>
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4 ">
+            <h1 class="mt-3 mb-3"></h1>
+            <div class="card">
+                <div class="card-body">
+                    <div id="map" style="width: 100%; height: 450px;">
+                        <canvas id="maps"></canvas>
+<script>
+    var map = L.map('map').setView([-7.837222, 113.0275], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    var packet = <?php echo json_encode($payload); ?>;
+    var koordinate = [];
+    $getJSON("<?= base_url('geo/kediri.geojson') ?>", function(data){
+        getLayer = L.geoJSON (data, {
+
+        }).addTo(map);
+
+    });
+</script>
+                    </div>
+
+                </div>
+            </div>
 <!-- Tambahkan elemen indikator loading data -->
 
 
 <div id="load" style="display: inline;">
     Loading...
 </div>
-
-<div id="layoutSidenav_content">
-    <main>
         <div class="container-fluid px-4">
             <div class="card my-5">
                 <div class="card-header d-flex justify-content-between">
@@ -25,11 +51,11 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                         <a class="btn btn-primary" href="<?= base_url('Payload') ?>" id="back">Kembali</a>
                     <?php endif; ?>
                 </div>
-                <div class="card-body">
+                <div class="card-body ">
                     <div class="table-responsive">
                         <table class="table" id="myTable"> <!-- Tambahkan id "myTable" -->
                             <thead>
-                                <tr>
+                                 <tr>
                                     <th>Date>
                                         <?php if ($selectedKabupaten == "" && $selectedKecamatan == "") : ?>
                                     <th>Kabupaten</th>
@@ -93,6 +119,7 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
     $(document).ready(function() {
         $('#load').fadeOut(500);
