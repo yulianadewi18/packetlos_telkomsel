@@ -10,10 +10,10 @@ class Payload extends BaseController
     {
         $payloadModel = new PayloadModel();
         $data['payload'] = $payloadModel->select('payload.*, SUM(payload) as total_payload')
-        ->groupBy('kabupaten')
-        ->orderBy('total_payload','ASC')
-        ->get()
-        ->getResultArray();
+            ->groupBy('kabupaten')
+            ->orderBy('total_payload', 'ASC')
+            ->get()
+            ->getResultArray();
         $selectedKabupaten = $this->request->getGet('kabupaten');
         $selectedKecamatan = $this->request->getGet('kecamatan');
         if ($selectedKabupaten !== null) {
@@ -30,7 +30,7 @@ class Payload extends BaseController
             // Misalnya, Anda bisa menggunakan nilai ini untuk mengambil data berdasarkan 'kecamatan'
             $data['payload'] = $payloadModel
                 ->where('kecamatan', $selectedKecamatan)
-                ->orderBy('payload', 'DESC') // Mengurutkan dari yang terkecil
+                ->orderBy('payload', 'ASC') // Mengurutkan dari yang terkecil
                 ->findAll();
         }
         return view('payload', $data);
