@@ -27,16 +27,33 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             }).addTo(map);
 
-                            <?php foreach ($payload as $key => $value) { ?>
-                                $.getJSON("<?= base_url('geo/' . $value['geo']) ?>", function(data) {
+                            <?php foreach ($payload as $index => $value) { ?>
+                                $.getJSON("<?= base_url('geo/' . $value['geojson']) ?>", function(data) {
                                     geoLayer = L.geoJson(data, {
                                         style: function(feature) {
-                                            return {
-                                                opacity: 1.0,
-                                                color: 'red',
-                                                fillOpacity: 0.1,
-                                                fillColor: 'red',
-                                            }
+                                            <?php if ($index <= 10) : ?>
+                                                return {
+                                                    opacity: 1.0,
+                                                    color: 'red',
+                                                    fillOpacity: 0.3,
+                                                    fillColor: 'red',
+                                                }
+                                            <?php elseif ($index > 10 && $index < 21) : ?>
+                                                return {
+                                                    opacity: 1.0,
+                                                    color: 'green',
+                                                    fillOpacity: 0.3,
+                                                    fillColor: 'green',
+                                                }
+                                            <?php else : ?>
+                                                return {
+                                                    opacity: 1.0,
+                                                    color: 'yellow',
+                                                    fillOpacity: 0.3,
+                                                    fillColor: 'yellow',
+                                                };
+                                            <?php endif; ?>
+
                                         },
                                     }).addTo(map);
                                     geoLayer.eachLayer(function(layer) {
