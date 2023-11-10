@@ -34,7 +34,7 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                                             return {
                                                 opacity: 1.0,
                                                 color: 'red',
-                                                fillOpacity: 0.3,
+                                                fillOpacity: 1.0,
                                                 fillColor: 'red',
                                             }
                                         },
