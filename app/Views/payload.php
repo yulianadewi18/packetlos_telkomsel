@@ -28,13 +28,13 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                             }).addTo(map);
 
                             <?php foreach ($payload as $key => $value) { ?>
-                                $.getJSON("<?= base_url('geo/' . $value['geo']) ?>", function(data) {
+                                $.getJSON("<?= base_url('geo/' . $value['geojson']) ?>", function(data) {
                                     geoLayer = L.geoJson(data, {
                                         style: function(feature) {
                                             return {
                                                 opacity: 1.0,
                                                 color: 'red',
-                                                fillOpacity: 1.0,
+                                                fillOpacity: 0.3,
                                                 fillColor: 'red',
                                             }
                                         },
