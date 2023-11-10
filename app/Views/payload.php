@@ -27,6 +27,7 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             }).addTo(map);
 
+
                             <?php foreach ($payload as $index => $value) { ?>
                                 $.getJSON("<?= base_url('geo/' . $value['geojson']) ?>", function(data) {
                                     geoLayer = L.geoJson(data, {
@@ -53,7 +54,6 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                                                     fillColor: 'yellow',
                                                 };
                                             <?php endif; ?>
-
                                         },
                                     }).addTo(map);
                                     geoLayer.eachLayer(function(layer) {
