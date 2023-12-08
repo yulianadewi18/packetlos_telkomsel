@@ -32,26 +32,54 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                                 $.getJSON("<?= base_url('geo/' . $value['geojson']) ?>", function(data) {
                                     geoLayer = L.geoJson(data, {
                                         style: function(feature) {
-                                            <?php if ($index <= 10) : ?>
+                                            <?php if ($index <= 2) : ?>
                                                 return {
-                                                    opacity: 1.0,
-                                                    color: 'red',
-                                                    fillOpacity: 0.3,
-                                                    fillColor: 'red',
+                                                    opacity: 2.0,
+                                                    color: '#38B000',
+                                                    fillOpacity: 0.6,
+                                                    fillColor: '#38B000',
                                                 }
-                                            <?php elseif ($index > 10 && $index < 21) : ?>
+                                            <?php elseif ($index > 2 && $index < 6) : ?>
+                                                return {
+                                                    opacity: 2.0,
+                                                    color: '#008000',
+                                                    fillOpacity: 0.6,
+                                                    fillColor: '#008000',
+                                                }
+                                            <?php elseif ($index > 5 && $index < 9) : ?>
+                                                return {
+                                                    opacity: 2.0,
+                                                    color: '#007200',
+                                                    fillOpacity: 0.6,
+                                                    fillColor: '#007200',
+                                                }
+                                            <?php elseif ($index > 8 && $index < 12) : ?>
                                                 return {
                                                     opacity: 1.0,
-                                                    color: 'green',
-                                                    fillOpacity: 0.3,
-                                                    fillColor: 'green',
+                                                    color: '#004B23',
+                                                    fillOpacity: 0.1,
+                                                    fillColor: '#004B23',
+                                                }
+                                            <?php elseif ($index > 11 && $index < 14) : ?>
+                                                return {
+                                                    opacity: 1.0,
+                                                    color: '#6A040F',
+                                                    fillOpacity: 0.1,
+                                                    fillColor: '#6A040F',
+                                                }
+                                            <?php elseif ($index > 13 && $index < 17) : ?>
+                                                return {
+                                                    opacity: 1.0,
+                                                    color: '#9D0208',
+                                                    fillOpacity: 0.1,
+                                                    fillColor: '#9D0208',
                                                 }
                                             <?php else : ?>
                                                 return {
                                                     opacity: 1.0,
-                                                    color: 'yellow',
-                                                    fillOpacity: 0.3,
-                                                    fillColor: 'yellow',
+                                                    color: '#D00000',
+                                                    fillOpacity: 0.1,
+                                                    fillColor: '#D00000',
                                                 };
                                             <?php endif; ?>
                                          },
