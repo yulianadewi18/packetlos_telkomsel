@@ -11,33 +11,46 @@
     <title>Login</title>
 </head>
 
-<body>
-    <div class="container py-4">
+<body style="background-color: #FB4F4F;">
+    <div class="container p-3">
         <div class="row justify-content-md-center">
-
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h1>Sign In</h1>
+            <div class="col-6 d-flex justify-content-center p-5">
+                <img src="assets/img/login-tel.png" alt="login Image" class="img-fluid">
+            </div>
+            <div class="col-6 align-self-center ">
+                <!-- <div class="d-flex align-items-center"> -->
+                <div class="card " style="border-radius: 40px;">
+                    <div class="card-body m-4">
+                        <h1>Selamat Datang!</h1>
+                        <p class="mb-5 mt-1">Masukkan email dan password anda</p>
                         <?php if (session()->getFlashdata('msg')) : ?>
                             <div class="alert alert-danger"><?= session()->getFlashdata('msg') ?></div>
                         <?php endif; ?>
                         <form action="/login/auth" method="post">
-                            <div class="mb-3">
-                                <label for="InputForEmail" class="form-label">Email address</label>
-                                <input type="email" name="email" class="form-control" id="InputForEmail" value="<?= set_value('email') ?>">
+                            <div class="input-group mb-3 ">
+                                <!-- <label for="InputForEmail" class="form-label">Email address</label> -->
+                                <input type="email" name="email" placeholder="Email address" class="form-control" id="InputForEmail" value="<?= set_value('email') ?>">
+                                <span class="input-group-text" id="basic-addon2">@example.com</span>
                             </div>
-                            <div class="mb-3">
-                                <label for="InputForPassword" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" id="InputForPassword">
+                            <div class="input-group mb-5">
+                                <!-- <label for="InputForPassword" class="form-label">Password</label> -->
+                                <input type="password" name="password" placeholder="Password" class="form-control" id="InputForPassword">
                             </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <div class="d-flex justify-content-center p-0 mb-0">
+
+                                <p class="">Belum punya akun? <a href="/register" class="text-decoration-none">Daftar</a></p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-danger rounded-pill" style="width: 100px; font-weight: 700;">LOG IN</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-
         </div>
+
+
+    </div>
     </div>
 
     <!-- Popper.js first, then Bootstrap JS -->

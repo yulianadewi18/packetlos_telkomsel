@@ -54,7 +54,7 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                                                     fillColor: 'yellow',
                                                 };
                                             <?php endif; ?>
-                                        },
+                                         },
                                     }).addTo(map);
                                     geoLayer.eachLayer(function(layer) {
                                         layer.bindPopup("");
