@@ -24,7 +24,7 @@
                                 <option value="CONSECUTIVE">CONSECUTIVE</option>
                                 <!-- Add more status options as needed -->
                             </select>
-                            <button class="btn btn-primary" type="submit"><i class="fas fa-filter"></i> Filter</button>
+                            <button class="btn btn-secondary" type="submit"><i class="fas fa-filter"></i> Filter</button>
                         </div>
                     </form>
                 </div>
@@ -32,8 +32,8 @@
 
 
             <div class="table table-responsive">
-                    <table id="tableAdmin" class="table table-striped" style="width:100%">
-                        <thead>
+                <table id="tableAdmin" class="table table-striped" style="width:100%">
+                    <thead>
                         <tr>
                             <th scope="col">No</th>
                             <th scope="col">Week</th>
