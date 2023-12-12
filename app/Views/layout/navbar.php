@@ -1,7 +1,7 @@
 <?php
 $session = session();
 ?>
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-danger">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="index.html">Krawung Telkomsel</a>
     <!-- Sidebar Toggle-->
@@ -17,14 +17,14 @@ $session = session();
                 <li>
                     <hr class="dropdown-divider" />
                 </li> -->
-                <li><a class="dropdown-item" href="/login/logout">Logout</a></li>
+                <li><a class="dropdown-item" href="login/logout">Logout</a></li>
             </ul>
         </li>
     </ul>
 </nav>
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <nav class="sb-sidenav accordion sb-sidenav-danger" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Menu</div>
