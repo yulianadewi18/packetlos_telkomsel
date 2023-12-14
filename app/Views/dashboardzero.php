@@ -8,49 +8,6 @@
     <main>
         <div class="container-fluid px-4 ">
             <h1 class="mt-4 mb-4">Dashboard Zero</h1>
-            <div class="card">
-                <div class="card-body">
-                    <div id="map" style="width: 100%; height: 450px;">
-                        <canvas id="maps-zero"></canvas>
-                        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-                        <script>
-                            // var map = L.map('map').setView([-7.837222, 113.0275], 8);
-
-                            // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            //     maxZoom: 19,
-                            //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            // }).addTo(map);
-                            var packet = <?php echo json_encode($zerotrafic_load); ?>;
-                            // console.log(packet);
-
-                            // for (let i = 0; i < packet.length; i++) {
-                            //     var markerColor = 'marker-icon-2x-blue'
-                            //     if (packet[i].remark === 'PAYLOAD') {
-                            //         markerColor = 'marker-icon-2x-yellow'; // Jika pl_status = 'consecutive', warna merah
-                            //     } else if (packet[i].remark === 'TRAFFIC') {
-                            //         markerColor = 'marker-icon-2x-red'; // Jika pl_status = 'spike', warna kuning
-                            //     }
-
-                            //     var markerIcon = new L.Icon({
-                            //         iconUrl: https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/${markerColor}.png,
-                            //         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                            //         iconSize: [25, 41],
-                            //         iconAnchor: [12, 41],
-                            //         popupAnchor: [1, -34],
-                            //         shadowSize: [41, 41]
-                            //     });
-                            //     var marker = L.marker([packet[i].latitude, packet[i].longitude], {
-                            //             icon: markerIcon
-                            //         }).addTo(map)
-                            //         .bindPopup('<b>' + packet[i].site_id + '<br/>' + '</b>')
-                            //         .openPopup();
-
-                            // }
-                        </script>
-                    </div>
-
-                </div>
-            </div>
 
             <div class="row mt-4">
                 <!-- Trend ALL -->
@@ -287,35 +244,27 @@
 
             <div class="card mt-3">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <form class="mt-4 mb-4" method="post">
-                                <div class="input-group">
-                                    <input class="form-control" type="text" placeholder="Cari" name="keyword" aria-label="Cari" aria-describedby="btnNavbarSearch" />
-                                    <button class="btn btn-primary" id="btnNavbarSearch" name="submit" type="submit"><i class="fas fa-search"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- Filter by Status -->
-                        <div class="col-4">
-                            <form class="mt-4 mb-4" method="post" name="filter-form">
-                                <div class="input-group">
-                                    <select class="form-select" name="filter_nop" id="filter">
-                                        <option value="">Filter by NOP</option>
-                                        <option value="JEMBER">JEMBER</option>
-                                        <option value="KEDIRI">KEDIRI</option>
-                                        <option value="LAMONGAN">LAMONGAN</option>
-                                        <option value="MADIUN">MADIUN</option>
-                                        <option value="MALANG">MALANG</option>
-                                        <option value="SIDOARJO">SIDOARJO</option>
-                                        <option value="SURABAYA">SURABAYA</option>
-                                        <!-- Add more status options as needed -->
-                                    </select>
-                                    <button class="btn btn-primary" type="button" id="filterButton"><i class="fas fa-filter"></i> Filter</button>
-                                </div>
-                            </form>
-                        </div>
+
+                    <!-- Filter by Status -->
+                    <div class="d-flex justify-content-end">
+                        <form class="mt-4 mb-4" method="post" name="filter-form">
+                            <div class="input-group">
+                                <select class="form-select" name="filter_nop" id="filter">
+                                    <option value="">Filter by NOP</option>
+                                    <option value="JEMBER">JEMBER</option>
+                                    <option value="KEDIRI">KEDIRI</option>
+                                    <option value="LAMONGAN">LAMONGAN</option>
+                                    <option value="MADIUN">MADIUN</option>
+                                    <option value="MALANG">MALANG</option>
+                                    <option value="SIDOARJO">SIDOARJO</option>
+                                    <option value="SURABAYA">SURABAYA</option>
+                                    <!-- Add more status options as needed -->
+                                </select>
+                                <button class="btn btn-primary" type="button" id="filterButton"><i class="fas fa-filter"></i> Filter</button>
+                            </div>
+                        </form>
                     </div>
+
                     <div class="table-responsive">
                         <table id="myTable" class="table border-collapse width:100%">
                             <thead class="table-light ">
@@ -362,18 +311,15 @@
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
 <script>
-  
     var table = $('#myTable').DataTable({
         dom: 'Bfrtip',
         buttons: ['print', 'copy', 'excel', 'pdf']
     });
     table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
-    
+
     $('#filterButton').on('click', function() {
         let selectedValue = $('#filter').val();
         table.search(selectedValue).draw();
     });
-   
-
 </script>
 <?= $this->endSection(); ?>
