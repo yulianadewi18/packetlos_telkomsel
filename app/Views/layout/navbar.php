@@ -18,9 +18,13 @@ $session = session();
                     <hr class="dropdown-divider" />
                 </li> -->
                 <li><a class="dropdown-item" href="login/logout">Logout</a></li>
+
             </ul>
         </li>
     </ul>
+    <div class="d-flex">
+        <img src="assets/img/logo-telkomsel.png" class="d-flex justify-content-end" alt="logo" style="width: 244px; height: 53px;"></li>
+    </div>
 </nav>
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
