@@ -6,8 +6,6 @@
 
 <?php
 
-use Kint\Zval\Value;
-
 $selectedKabupaten = $_GET['kabupaten'] ?? null;
 $selectedKecamatan = $_GET['kecamatan'] ?? null;
 ?>
@@ -27,62 +25,33 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             }).addTo(map);
 
-
                             <?php foreach ($payload as $index => $value) { ?>
-                                $.getJSON("<?= base_url('geo/' . $value['geojson']) ?>", function(data) {
+                                $.getJSON("<?= base_url('geo/' . $value['geo']) ?>", function(data) {
                                     geoLayer = L.geoJson(data, {
                                         style: function(feature) {
-                                            <?php if ($index <= 2) : ?>
+                                            <?php if ($index <= 10) : ?>
                                                 return {
                                                     opacity: 2.0,
-                                                    color: '#38B000',
+                                                    color: 'red',
                                                     fillOpacity: 0.6,
-                                                    fillColor: '#38B000',
+                                                    fillColor: 'red',
                                                 }
-                                            <?php elseif ($index > 2 && $index < 6) : ?>
+                                            <?php elseif ($index > 10 && $index < 21) : ?>
                                                 return {
                                                     opacity: 2.0,
-                                                    color: '#008000',
+                                                    color: 'yellow',
                                                     fillOpacity: 0.6,
-                                                    fillColor: '#008000',
-                                                }
-                                            <?php elseif ($index > 5 && $index < 9) : ?>
-                                                return {
-                                                    opacity: 2.0,
-                                                    color: '#007200',
-                                                    fillOpacity: 0.6,
-                                                    fillColor: '#007200',
-                                                }
-                                            <?php elseif ($index > 8 && $index < 12) : ?>
-                                                return {
-                                                    opacity: 1.0,
-                                                    color: '#004B23',
-                                                    fillOpacity: 0.1,
-                                                    fillColor: '#004B23',
-                                                }
-                                            <?php elseif ($index > 11 && $index < 14) : ?>
-                                                return {
-                                                    opacity: 1.0,
-                                                    color: '#6A040F',
-                                                    fillOpacity: 0.1,
-                                                    fillColor: '#6A040F',
-                                                }
-                                            <?php elseif ($index > 13 && $index < 17) : ?>
-                                                return {
-                                                    opacity: 1.0,
-                                                    color: '#9D0208',
-                                                    fillOpacity: 0.1,
-                                                    fillColor: '#9D0208',
+                                                    fillColor: 'yellow',
                                                 }
                                             <?php else : ?>
                                                 return {
-                                                    opacity: 1.0,
-                                                    color: '#D00000',
-                                                    fillOpacity: 0.1,
-                                                    fillColor: '#D00000',
+                                                    opacity: 2.0,
+                                                    color: 'green',
+                                                    fillOpacity: 0.6,
+                                                    fillColor: 'green',
                                                 };
                                             <?php endif; ?>
-                                         },
+                                        },
                                     }).addTo(map);
                                     geoLayer.eachLayer(function(layer) {
                                         layer.bindPopup("");
@@ -91,15 +60,9 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                             <?php } ?>
                         </script>
                     </div>
-
                 </div>
             </div>
-            <!-- Tambahkan elemen indikator loading data -->
 
-
-            <div id="load" style="display: inline;">
-                Loading...
-            </div>
             <div class="container-fluid px-4">
                 <div class="card my-5">
                     <div class="card-header d-flex justify-content-between">
@@ -113,7 +76,7 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
                             <table class="table" id="myTable"> <!-- Tambahkan id "myTable" -->
                                 <thead>
                                     <tr>
-                                        <th>Date>
+                                        <th>Date
                                             <?php if ($selectedKabupaten == "" && $selectedKecamatan == "") : ?>
                                         <th>Kabupaten</th>
                                     <?php endif; ?>
@@ -169,80 +132,12 @@ $selectedKecamatan = $_GET['kecamatan'] ?? null;
     </main>
 </div>
 
-<!-- <div id="loading" class="overlay">
-    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-</div> -->
-
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#load').fadeOut(500);
-
-
-
-        // $('#myTable tbody').on('click', 'a', function() {
-        //     var rowData = table.row(this).data();
-        //     var kabupaten = rowData[10];
-        $('a').click(function() {
-            // $('<div class=loadingDiv>loading...</div>').prependTo(document.body);
-            // e.preventDefault();
-
-            $('#loading').addClass('overlay');
-            $('#loading').html('<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>');
-            // $('#loading').html('<div style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><div>')
-            setTimeout(RemoveClass, 100);
-        })
-
-        function RemoveClass() {
-            $('#loading').RemoveClass('overlay');
-            $('#loading').fadeOut();
-        }
-    });
-
-    // $("#load").load(payload.php);
-    // var table = $('#myTable').DataTable();
-    // var loadingIndicator = $('#loading-indicator');
-    // $("#result").load(url);
-    // $('#table-payload tbody').on('click', 'tr', function() {
-    //     var rowData = table.row(this).data();
-    //     var kecamatan = rowData[2];
-    //     e.preventDefault();
-
-    // Menampilkan indikator loading data
-    // loadingIndicator.show();
-
-    // $.ajax({
-    //     url: 'http://localhost:8080/Controller/Payload',
-    //     type: 'POST',
-    //     data: {
-    //         kecamatan: kecamatan
-    //     },
-    // success: function(response) {
-    // Menyembunyikan indikator loading data
-    // loadingIndicator.hide();
-
-    // Memperbarui tabel dengan data kecamatan yang diambil
-    // $('#table-payload tbody').html(response);
-    // $('#loading').addClass('overlay');
-    // $('#loading').html('<i class="fa fa-spinner fa-spin"></i>');
-    // setTimeout(removeClass, 100);
-    //     }
-    // });
-
-    //     function removeClass() {
-    //         $('#loading').removeClass('overlay');
-    //         $('#loading').fadeOut();
-    //     }
-    // });
-
-    // $('#goBack').on('click', function(e) {
-    //     e.preventDefault();
-    //     // Lakukan apa yang diperlukan untuk kembali ke halaman sebelumnya
-    // });
-    // });
+    new DataTable('#myTable');
 </script>
 
 <?= $this->endSection(); ?>
